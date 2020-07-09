@@ -9,7 +9,7 @@ const interviewLists =  props.interviewers.map((interviewer) => (
   <InterviewerListItem
     {...interviewer}
     selected = {interviewer.id === props.value}
-    setInterviewer = {(event) => props.onChange(interviewer.id)}
+    setInterviewer = {() => props.onChange(interviewer.id)}
   />
 
 ))
