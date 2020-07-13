@@ -8,12 +8,14 @@ export default function useVisualMode(initial) {
     replace ? setMode(history[history.length-1]) : setHistory(prevArray =>[...prevArray, mode])
     setMode(mode);
   }
+  console.log(history)
+
   function back() {
     if(history.length > 1){
       history.pop()
       setMode(history[history.length-1])
     }
   }
-
+  console.log(history)
   return { mode, transition, back, history};
 }
