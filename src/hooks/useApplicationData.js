@@ -10,7 +10,7 @@ export default function useVisualMode() {
     });
 
     const setDay = day => setState({...state, day});
-    
+    //const setSpots = spot => setState({...state, spot})
     useEffect(() => {
       Promise.all([
         axios.get(`/api/days`),
@@ -21,7 +21,12 @@ export default function useVisualMode() {
       })
     },[]);
 
+    function getDay(appointmentId){
+      return state.days.filter(day =>day.appointments.includes(appointmentId))[0]
+    }
+
     const bookInterview = (id, interview) => {
+
       const appointment = {
         ...state.appointments[id],
         interview: { ...interview }
@@ -30,20 +35,33 @@ export default function useVisualMode() {
         ...state.appointments,
         [id]: appointment
       };
+     
+      const day = getDay(id)
+      let newDay = {
+        ...day,
+        spots: day.spots - 1
+      }
 
-      setState({
-        ...state,
-        appointments
-      });
+      let newDays = state.days
+      
+      for(let i = 0 ; i < state.days.length; i++){
+        if(state.days[i].id === newDay.id){
+          newDays.splice(i, 1, newDay)
+        }
+      }
 
-      console.log("Appointments*******"+appointment)
-
+      
 
       return (
         axios.put("/api/appointments/"+id,{
           interview
         }).then((response) => { 
-          console.log(response)
+          console.log(`day: ${JSON.stringify(newDays)}`)
+          setState({
+            ...state,
+            appointments,
+            days: newDays
+          });
         })
       )
     };
@@ -57,16 +75,31 @@ export default function useVisualMode() {
         ...state.appointments,
         [id]: appointment
       };
-      setState({
-        ...state,
-        appointments
-      });
+      
+      const day = getDay(id)
+      let newDay = {
+        ...day,
+        spots: day.spots + 1
+      }
+
+      let newDays = state.days
+      
+      for(let i = 0 ; i < state.days.length; i++){
+        if(state.days[i].id === newDay.id){
+          newDays.splice(i, 1, newDay)
+        }
+      }
 
       return (
         axios.delete("/api/appointments/"+id,{
           interview
         }).then((response) => { 
-          console.log(response)
+          console.log(`day: ${JSON.stringify(newDays)}`)
+          setState({
+            ...state,
+            appointments,
+            days: newDays
+          });
         })
       )
     };
