@@ -17,7 +17,7 @@ export default function useVisualMode() {
         axios.get(`/api/appointments`),
         axios.get(`/api/interviewers`)
       ]).then((all) => {
-        setState(prev => ({ days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
+        setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
       })
     },[]);
 
@@ -49,8 +49,6 @@ export default function useVisualMode() {
           newDays.splice(i, 1, newDay)
         }
       }
-
-      
 
       return (
         axios.put("/api/appointments/"+id,{

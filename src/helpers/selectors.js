@@ -2,7 +2,7 @@ function getAppointmentsForDay(state, day){
 
   const filteredDays = state.days.filter(oneDay => oneDay.name === day);
   let appoArray = [];
-  const finalArray = [];
+  let finalArray = [];
   filteredDays.forEach(element => {
     appoArray = element.appointments;
   })

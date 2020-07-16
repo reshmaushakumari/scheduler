@@ -6,7 +6,7 @@ import Appointment from "components/Appointment";
 import  { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import  useApplicationData from "hooks/useApplicationData";
 
-export default function Application() {
+export default function Application(props) {
 
   const {
     state,
@@ -21,7 +21,7 @@ export default function Application() {
 
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    return (
+    return(
       <Appointment 
         key={appointment.id}
         id={appointment.id}
@@ -57,7 +57,10 @@ export default function Application() {
         />
       </section>
       <section className="schedule">
-        {schedule}
+        <section className="schedule">
+          {schedule}
+          <Appointment key="last" time="5pm" />
+        </section>
       </section>
     </main>
   );
