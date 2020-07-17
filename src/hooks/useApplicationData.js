@@ -41,7 +41,7 @@ export default function useVisualMode() {
         ...day,
         spots: day.spots - 1
       }
-
+      console.log("NEWDAY", newDay)
       let newDays = state.days
       
       for(let i = 0 ; i < state.days.length; i++){
@@ -54,11 +54,35 @@ export default function useVisualMode() {
         axios.put("/api/appointments/"+id,{
           interview
         }).then((response) => { 
-          console.log(`day: ${JSON.stringify(newDays)}`)
+          //console.log(`day: ${JSON.stringify(newDays)}`)
           setState({
             ...state,
             appointments,
             days: newDays
+          });
+        })
+      )
+    };
+
+    const editInterview = (id, interview) => {
+
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+
+      return (
+        axios.put("/api/appointments/"+id,{
+          interview
+        }).then((response) => { 
+          //console.log(`day: ${JSON.stringify(newDays)}`)
+          setState({
+            ...state,
+            appointments
           });
         })
       )
@@ -79,6 +103,7 @@ export default function useVisualMode() {
         ...day,
         spots: day.spots + 1
       }
+      console.log("NEWDAY", newDay)
 
       let newDays = state.days
       
@@ -102,5 +127,5 @@ export default function useVisualMode() {
       )
     };
 
-return  { state, setDay, bookInterview, cancelInterview };
+return  { state, setDay, bookInterview, cancelInterview, editInterview };
 }

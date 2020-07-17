@@ -39,6 +39,17 @@ export default function Appointment(props){
     .catch(error => transition(ERROR_SAVE, true));
   }
 
+  function edit(name, interviewer) {
+    const interview = {
+      student: name, 
+      interviewer
+    };
+    transition(SAVING); 
+    props.editInterview(props.id, interview)
+    .then(() => transition(SHOW))
+    .catch(error => transition(ERROR_SAVE, true));
+  }
+
   function deleteInterview() {
     const interview = "";
     transition(CONFIRM)
@@ -82,7 +93,7 @@ export default function Appointment(props){
         {mode === EDIT && (<Form
                           name={props.interview.student}
                           interviewers={props.interviewers}
-                          onSave={save}
+                          onSave={edit}
                           onCancel={onCancel}/>)}
         {mode === ERROR_SAVE &&(<Error message="Could not save appointment"
                           onClose={onCancel}/>)}
