@@ -10,7 +10,6 @@ export default function useVisualMode() {
     });
 
     const setDay = day => setState({...state, day});
-    //const setSpots = spot => setState({...state, spot})
     useEffect(() => {
       Promise.all([
         axios.get(`/api/days`),
@@ -41,7 +40,6 @@ export default function useVisualMode() {
         ...day,
         spots: day.spots - 1
       }
-      console.log("NEWDAY", newDay)
       let newDays = state.days
       
       for(let i = 0 ; i < state.days.length; i++){
@@ -89,7 +87,6 @@ export default function useVisualMode() {
     };
 
     const cancelInterview = (id, interview) => {
-      console.log(id, interview);
       const appointment = {
         ...state.appointments[id]
       };    
@@ -103,8 +100,6 @@ export default function useVisualMode() {
         ...day,
         spots: day.spots + 1
       }
-      console.log("NEWDAY", newDay)
-
       let newDays = state.days
       
       for(let i = 0 ; i < state.days.length; i++){
@@ -117,7 +112,7 @@ export default function useVisualMode() {
         axios.delete("/api/appointments/"+id,{
           interview
         }).then((response) => { 
-          console.log(`day: ${JSON.stringify(newDays)}`)
+          //console.log(`day: ${JSON.stringify(newDays)}`)
           setState({
             ...state,
             appointments,
