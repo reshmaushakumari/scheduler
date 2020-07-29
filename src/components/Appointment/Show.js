@@ -1,5 +1,5 @@
 import React from 'react';
-
+//component to show the existing student name and interviewer name
 export default function Show(props) {
   return (
     <main className="appointment__card appointment__card--show">

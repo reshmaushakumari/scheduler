@@ -28,6 +28,8 @@ export default function Appointment(props) {
   function onCancel() {
     back();
   }
+
+  //To save the appointment
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -38,6 +40,8 @@ export default function Appointment(props) {
       .then(() => transition(SHOW))
       .catch(error => transition(ERROR_SAVE, true));
   }
+
+  //Edit the appointment
 
   function edit(name, interviewer) {
     const interview = {
@@ -50,6 +54,7 @@ export default function Appointment(props) {
       .catch(error => transition(ERROR_SAVE, true));
   }
 
+  //Delete existing appointment
   function deleteInterview() {
     const interview = "";
     transition(CONFIRM)
